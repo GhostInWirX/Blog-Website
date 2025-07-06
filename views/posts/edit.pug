@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  .row
+    .col-md-8.mx-auto
+      h1.mb-4.text-white Edit Post
+      form(action=`/posts/${post._id}?_method=PUT`, method="POST")
+        .form-group.mb-3
+          label.text-white(for="title") Title
+          input.form-control.text-white.bg-dark(type="text", name="title", value=post.title, required)
+        .form-group.mb-3
+          label.text-white(for="content") Content
+          textarea.form-control.text-white.bg-dark(name="content", rows="5", required)= post.content
+        .form-group.mb-3
+          label.text-white(for="tags") Tags (comma separated)
+          input.form-control.text-white.bg-dark(type="text", name="tags", value=post.tags.join(', '), placeholder="nodejs, express, mongodb")
+        button.btn.btn-primary(type="submit") Update Post

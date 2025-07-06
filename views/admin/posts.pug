@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  h1.text-white.mb-4 All Posts
+  table.table.table-dark.table-striped
+    thead
+      tr
+        th Title
+        th Author
+        th Created At
+        th Actions
+    tbody
+      each post in posts
+        tr
+          td= post.title || 'No Title'
+          td
+            if post.createdBy && post.createdBy.username
+              = post.createdBy.username
+            else
+              | Unknown Author
+          td
+            if post.createdAt
+              = post.createdAt.toLocaleDateString()
+            else
+              | Unknown Date
+          td
+            form.d-inline(action=`/admin/posts/${post._id}?_method=DELETE`, method="POST")
+              button.btn.btn-danger.btn-sm(type="submit") Delete

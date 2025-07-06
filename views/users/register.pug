@@ -1,0 +1,119 @@
+extends ../layout
+
+block content
+  .container.min-vh-100.d-flex.align-items-center
+    .row.justify-content-center.w-100
+      .col-xl-4.col-lg-6.col-md-8
+        //- Add flash messages display here
+        if error_msg
+          .alert.alert-danger.animate__animated.animate__fadeInDown.mb-3= error_msg
+        if error
+          .alert.alert-danger.animate__animated.animate__fadeInDown.mb-3= error
+        
+        .card.bg-dark.text-white.border-secondary.animate__animated.animate__fadeInUp
+          .card-body.p-5
+            .text-center.mb-5
+              i.fas.fa-user-plus.fa-3x.text-primary.mb-4
+              h2.h4.mb-3 Create Your Account
+              p.text-muted.mb-0 Join our secure platform
+
+            .divider.my-4
+              .divider-line.bg-secondary
+              .divider-text.text-muted.small OR
+              .divider-line.bg-secondary
+
+            form(action="/users/register", method="POST")
+              .mb-4
+                .form-floating
+                  input.form-control.bg-darker.text-white.border-secondary(
+                    type="text",
+                    name="username",
+                    id="username",
+                    placeholder="Username",
+                    required
+                  )
+                  label.text-muted(for="username")
+                    i.fas.fa-user-alt.me-2
+                    | Username
+
+              .mb-4
+                .form-floating
+                  input.form-control.bg-darker.text-white.border-secondary(
+                    type="password",
+                    name="password",
+                    id="password",
+                    placeholder="Password",
+                    required,
+                    minlength="6"
+                  )
+                  label.text-muted(for="password")
+                    i.fas.fa-lock.me-2
+                    | Password
+
+              button.btn.btn-primary.btn-lg.w-100.py-3.mb-4(type="submit")
+                | Continue
+                i.fas.fa-arrow-right-long.ms-2
+
+            .text-center.pt-3
+              span.text-muted.small Already registered? 
+              a.small.text-decoration-none.text-primary(href="/users/login")
+                i.fas.fa-sign-in-alt.me-2
+                | Sign In
+
+  style.
+    body {
+      background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+    }
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .bg-darker {
+      background-color: #1a1a1a !important;
+    }
+    .form-control {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .form-control:focus {
+      border-color: rgba(13, 110, 253, 0.6);
+      box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25);
+      background-color: #121212;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+      border: none;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1.5px);
+      box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+    }
+    .divider {
+      position: relative;
+      text-align: center;
+    }
+    .divider-line {
+      position: absolute;
+      top: 50%;
+      width: 45%;
+      height: 1px;
+    }
+    .divider-line:first-child {
+      left: 0;
+    }
+    .divider-line:last-child {
+      right: 0;
+    }
+    .divider-text {
+      position: relative;
+      z-index: 1;
+      padding: 0 1rem;
+    }
+    .alert-danger {
+      background-color: #2d2d2d;
+      color: #ff6b6b;
+      border: 1px solid #ff6b6b;
+      border-radius: 0.5rem;
+    }

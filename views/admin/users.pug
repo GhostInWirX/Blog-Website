@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  h1.text-white.mb-4 All Users
+  table.table.table-dark.table-striped
+    thead
+      tr
+        th Username
+        th Email
+        th Admin
+        th Created At
+    tbody
+      each user in users
+        tr
+          td= user.username
+          td= user.email
+          td= user.isAdmin ? 'Yes' : 'No'
+          td= user.createdAt.toLocaleDateString()

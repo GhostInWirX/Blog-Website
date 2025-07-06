@@ -1,0 +1,71 @@
+extends ../layout
+
+block content
+  .container.min-vh-100.d-flex.align-items-center
+    .row.justify-content-center.w-100
+      .col-xl-4.col-lg-6.col-md-8
+        //- Add flash messages display here
+        if error_msg
+          .alert.alert-danger.animate__animated.animate__fadeInDown.mb-3= error_msg
+        if error
+          .alert.alert-danger.animate__animated.animate__fadeInDown.mb-3= error
+        
+        .card.bg-dark.text-white.border-secondary.animate__animated.animate__fadeInUp
+          .card-body.p-5
+            .text-center.mb-5
+              i.fas.fa-user-shield.fa-3x.text-primary.mb-4
+              h2.h3.mb-3 Secure Login
+              p.text-muted Access your account securely
+
+ 
+            form(action="/users/login", method="POST")
+              .mb-4
+                .form-floating
+                  input.form-control.bg-dark.text-white.border-secondary(
+                    type="text",
+                    name="username",
+                    id="username",
+                    placeholder="Username",
+                    required
+                  )
+                  label.text-muted(for="username") Username
+
+              .mb-4
+                .form-floating
+                  input.form-control.bg-dark.text-white.border-secondary(
+                    type="password",
+                    name="password",
+                    id="password",
+                    placeholder="Password",
+                    required
+                  )
+                  label.text-muted(for="password") Password
+
+              button.btn.btn-primary.btn-lg.w-100.py-3.mb-4(type="submit")
+                | Authenticate
+                i.fas.fa-fingerprint.ms-2
+                
+          .card-footer.bg-dark.border-secondary.py-3.px-5
+            .d-flex.justify-content-between
+              span.text-muted.small New member?
+              a.small.text-decoration-none.text-primary(href="/users/register") Create Account
+
+  style.
+    body {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    }
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .form-control:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      background-color: #1a1a1a;
+    }
+    .alert-danger {
+      background-color: #2d2d2d;
+      color: #ff6b6b;
+      border: 1px solid #ff6b6b;
+      border-radius: 0.5rem;
+    }

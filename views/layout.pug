@@ -1,0 +1,207 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Blog App
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css", rel="stylesheet")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css")
+    link(href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet")
+    style.
+      :root {
+        --neon-blue: #4dabf7;
+        --cyber-purple: #7c3aed;
+        --dark-bg: #0f172a;
+        --dark-surface: #1e293b;
+        --accent: #f59e0b;
+      }
+
+      body {
+        background-color: var(--dark-bg);
+        color: rgba(255,255,255,0.9);
+        font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: linear-gradient(135deg, var(--dark-surface), #1a2333);
+        border-bottom: 1px solid rgba(74, 85, 104, 0.5);
+        box-shadow: 0 4px 24px -6px rgba(0,0,0,0.25);
+        backdrop-filter: blur(12px);
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        background: linear-gradient(45deg, var(--neon-blue), var(--cyber-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .nav-link {
+        position: relative;
+        color: rgba(255,255,255,0.75) !important;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--neon-blue) !important;
+        transform: translateY(-1px);
+      }
+
+      .nav-link.active {
+        color: var(--neon-blue) !important;
+      }
+
+      .dropdown-menu {
+        background: var(--dark-surface);
+        border: 1px solid rgba(74, 85, 104, 0.5);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      }
+
+      .dropdown-item {
+        color: rgba(255,255,255,0.8);
+        transition: all 0.2s ease;
+      }
+
+      .dropdown-item:hover {
+        background: rgba(79, 70, 229, 0.1);
+        color: var(--neon-blue);
+      }
+
+      .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+      }
+
+      .card {
+        background: var(--dark-surface);
+        border: 1px solid rgba(74, 85, 104, 0.3);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px -6px rgba(0,0,0,0.3);
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, var(--neon-blue), var(--cyber-purple));
+        border: none;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 16px -4px rgba(79, 70, 229, 0.4);
+      }
+
+      .form-control {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid rgba(74, 85, 104, 0.3);
+        color: white;
+      }
+
+      .form-control:focus {
+        background: rgba(30, 41, 59, 0.8);
+        border-color: var(--neon-blue);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+      }
+
+  body
+    .toast-container
+
+    nav.navbar.navbar-expand-lg.navbar-dark
+      .container
+        a.navbar-brand(href="/") 
+          i.fas.fa-blog.me-2
+          | Big Boss's Blog
+        button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav")
+          span.navbar-toggler-icon
+        .collapse.navbar-collapse#navbarNav
+          ul.navbar-nav.me-auto.mb-2.mb-lg-0
+            li.nav-item
+              a.nav-link(href="/posts")
+                i.fas.fa-stream.me-1
+                | All Posts
+            if user
+              li.nav-item
+                a.nav-link(href="/posts/new")
+                  i.fas.fa-plus-circle.me-1
+                  | New Post
+          ul.navbar-nav
+            if user
+              if user.isAdmin
+                 li.nav-item
+                  a.nav-link(href="/admin/posts")
+                   i.fas.fa-tools.me-1
+                   | Manage Posts
+                 li.nav-item
+                  a.nav-link(href="/admin/users")
+                   i.fas.fa-users-cog.me-1
+                   | Manage Users
+              li.nav-item.dropdown
+                a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown")
+                  i.fas.fa-user-astronaut.me-1
+                  | #{user.username}
+                ul.dropdown-menu.dropdown-menu-end
+
+                  li
+                    a.dropdown-item(href="/users/logout")
+                      i.fas.fa-rocket.me-2
+                      | Logout
+            else
+              li.nav-item
+                a.nav-link(href="/users/register")
+                  i.fas.fa-user-plus.me-1
+                  | Register
+              li.nav-item
+                a.nav-link(href="/users/login")
+                  i.fas.fa-sign-in-alt.me-1
+                  | Login
+
+    .container.mt-5
+      block content
+
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js")
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const createToast = (message, type) => {
+          const iconMap = {
+            success: 'check-circle',
+            error: 'exclamation-triangle',
+            info: 'info-circle'
+          };
+          
+          const toast = document.createElement('div');
+          toast.className = `toast align-items-center text-white bg-${type} border-0`;
+          toast.innerHTML = `
+            <div class="d-flex align-items-center">
+              <div class="toast-body p-3">
+                <i class="fas fa-${iconMap[type]} me-3"></i>
+                ${message}
+              </div>
+              <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+          `;
+      document.querySelector('.toast-container').appendChild(toast); 
+          new bootstrap.Toast(toast, { 
+            autohide: true, 
+            delay: 5000,
+            animation: true
+          }).show();
+        };
+
+        ['success_msg', 'error_msg', 'error'].forEach(type => {
+          if (document.querySelector(`.alert-${type}`)) {
+            const message = document.querySelector(`.alert-${type}`).textContent;
+            createToast(message, type.includes('success') ? 'success' : 'danger');
+          }
+        });
+      });

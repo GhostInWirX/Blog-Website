@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  .row
+    .col-md-8.mx-auto
+      .card.mb-4
+        .card-body
+          h1.card-title= post.title
+          p.card-text= post.content
+          .mb-3
+            each tag in post.tags
+              span.badge.bg-secondary.me-1= tag
+          p.card-text
+            small.text-muted Posted By #{post.createdBy.username} on #{post.createdAt.toLocaleDateString()}
+          if user && user._id.toString() === post.createdBy._id.toString()
+            a.btn.btn-secondary(href=`/posts/${post._id}/edit`) Edit
+            form.d-inline(action=`/posts/${post._id}?_method=DELETE`, method="POST")
+             button.btn.btn-danger.ms-2(type="submit") Delete

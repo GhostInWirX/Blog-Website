@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  .row
+    .col-md-8.mx-auto
+      .card.mb-4
+        .card-body
+          form(action="/posts", method="GET")
+            .input-group
+              input.form-control.text-white(type="text", name="search", placeholder="Search by title or tags...", value=searchQuery)
+              button.btn.btn-primary(type="submit") Search
+      
+      each post in posts
+        .card.mb-3
+          .card-body
+            h5.card-title= post.title
+            p.card-text= post.content.substring(0, 100) + '...'
+            .mb-2
+              each tag in post.tags
+                span.badge.bg-secondary.me-1= tag
+            p.card-text
+              small.text-muted Posted by #{post.createdBy ? post.createdBy.username : 'Unknown'} on #{post.createdAt.toLocaleDateString()}
+            a.btn.btn-primary.btn-sm(href=`/posts/${post._id}`) Read More
+            if user && post.createdBy && user._id.toString() === post.createdBy._id.toString()
+             a.btn.btn-secondary.btn-sm.ms-2(href=`/posts/${post._id}/edit`) Edit
+             form.d-inline(action=`/posts/${post._id}?_method=DELETE`, method="POST")
+               button.btn.btn-danger.btn-sm.ms-2(type="submit") Delete
