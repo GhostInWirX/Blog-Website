@@ -8,7 +8,7 @@ const methodOverride = require('method-override');
 const app = express();
 app.use(methodOverride('_method'));
 // Database connection
-mongoose.connect('mongodb://localhost:27017/blog-app', {
+mongoose.connect('mongodb+srv://oliviajonesss000:rkH72kilaVh06drk@cluster0.lzpge1g.mongodb.net/', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
